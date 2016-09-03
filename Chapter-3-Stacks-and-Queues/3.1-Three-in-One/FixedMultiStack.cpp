@@ -9,8 +9,8 @@ FixedMultiStack::FixedMultiStack(int stackCapacity)
 
 FixedMultiStack::~FixedMultiStack()
 {
-  delete stackArray;
-  delete stackCapacityUsed;
+  delete []stackArray;
+  delete []stackCapacityUsed;
 }
 
 void FixedMultiStack::push(int stackNum, int value)
