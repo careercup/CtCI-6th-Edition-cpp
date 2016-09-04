@@ -17,6 +17,7 @@ public:
 
   bool isEmpty() const;
   int getSize() const;
+  
 private:
   StackNode *head;
   int stackSize;
