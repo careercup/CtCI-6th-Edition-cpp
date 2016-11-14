@@ -1,32 +1,41 @@
-#include <string>
-#include <vector>
+#include <stdio.h>
+#include <string.h>
+#include <algorithm>
 #include <iostream>
+using namespace std;
 
-void main std::wstring sort(const std::wstring &s)
+bool arePermutation(string &str1,string &str2)
 {
-		std::vector<wchar_t> content = s.toCharArray();
-		Arrays::sort(content);
-		return std::wstring(content);
+    // Get lengths of both strings
+    int n1 = str1.length();
+    int n2 = str2.length();
+
+    // If length of both strings is not same, then they
+    // cannot be anagram
+    if (n1 != n2)
+      return false;
+
+    // Sort both strings
+    sort(str1.begin(), str1.end());
+    sort(str2.begin(), str2.end());
+    // Compare sorted strings
+    for (int i = 0; i < n1;  i++)
+       if (str1[i] != str2[i])
+         return false;
+
+    return true;
 }
 
-bool permutation(const std::wstring &s, const std::wstring &t)
-	{
-		return sort(s) == sort(t);
-	}
 
-void main(std::vector<std::wstring> &args)
-	{
-		std::vector<std::vector<std::wstring>> pairs =
-		{
-			{L"apple", L"papel"},
-			{L"carrot", L"tarroc"},
-			{L"hello", L"llloh"}
-		};
-		for (auto pair : pairs)
-		{
-			std::wstring word1 = pair[0];
-			std::wstring word2 = pair[1];
-			bool anagram = permutation(word1, word2);
-			std::wcout << word1 << std::wstring(L", ") << word2 << std::wstring(L": ") << anagram << std::endl;
-		}
-	}
+int main()
+{
+    string str1 = "testest";
+    string str2 = "estxest";
+    if (arePermutation(str1, str2))
+      cout << ("The two strings are permutation of each other") << endl;
+    else
+      cout << ("The two strings are not permutation of each other") << endl;
+    cout << "The sorted first string is " << str1 <<endl;
+    cout << "The sorted second string is " << str2 <<endl;
+    return 0;
+}
