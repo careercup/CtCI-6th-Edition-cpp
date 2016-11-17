@@ -17,7 +17,6 @@ int countWays(int n , vector<int> v){
 			sum = sum + countWays((n-v[i]),v);
 		}	
 	}
-
 	return sum;
 }
 
