@@ -23,12 +23,6 @@ struct Node {
   Node( int d ) : data{ d }, next{ nullptr } { }
 };
 
-
-/**
- * [insert - helper routine to insert a new node with data]
- * @param head [head of the list]
- * @param data [data of the new node]
- */
 void insert( Node * & head, int data ) {
   Node * newNode = new Node(data);
   if ( head == nullptr ) {
@@ -42,10 +36,6 @@ void insert( Node * & head, int data ) {
   }
 }
 
-/**
- * [printList - helper routine to print the list]
- * @param head [head of the list]
- */
 void printList( Node * head ) {
   while ( head ) {
     std::cout << head->data << "-->";
@@ -54,29 +44,40 @@ void printList( Node * head ) {
   std::cout << "nullptr" << std::endl;
 }
 
-/**
- * [partition - routine to partition list around x]
- * @param head [head of the list]
- * @param x    [data around which partition is being done]
- */
-void partition( Node * & head , int x ) {
-  Node * tail = head;
-  Node * curr = head;
-  while( curr != nullptr ) {
-    Node * nextNode = curr->next;
-    if ( curr->data < x ) {
-      //insert at head
-      curr->next = head;
-      head = curr;
-    } else {
-      // insert at tail
-      tail->next = curr;
-      tail = curr;
-    }
-    curr = nextNode;
-  }
-  tail->next = nullptr;
-}
+
+ /* We start with a new list. Elements bigger than the pivot element are put at the tail list
+ and elements smaller are put at the head list*/
+Node * partition( Node * listhead , int x ) {
+   Node * head = nullptr;
+   Node * headInitial = nullptr;   /*The initial node of list head*/
+   Node * tail = nullptr;
+   Node * tailInitial = nullptr;   /*The initial node of list tail*/
+   Node * curr = listhead;
+   while( curr != nullptr ) {
+     Node * nextNode = curr->next;
+     if ( curr->data < x ) {
+            if (head == nullptr) {
+                head = curr;
+                headInitial = head;
+            }
+       //insert curr node to head list
+       head->next = curr;
+       head = curr;
+     } else {
+            if (tail == nullptr) {
+                tail = curr;
+                tailInitial = tail;
+            }
+       // insert curr node to tail list
+       tail->next = curr;
+       tail = curr;
+     }
+     curr = nextNode;
+   }
+   head->next = tailInitial;  /*Now, we connect the head list to tail list.*/
+   tail->next = nullptr;
+   return headInitial;
+ }
 
 
 
@@ -84,16 +85,12 @@ void partition( Node * & head , int x ) {
 
 int main() {
   Node * head = nullptr;
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> distribution(1, 9);
   for ( int i = 0; i < 10; ++i ) {
-		insert(head, distribution(mt));
+		insert(head, rand() % 9);
 	}
   std::cout << "List before partition around 5:\n";
   printList(head);
-  partition(head, 5);
   std::cout << "List after partition around 5:\n";
-  printList(head);
+  printList(partition(head, 5));
   return 0;
 }
