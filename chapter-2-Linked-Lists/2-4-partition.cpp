@@ -78,24 +78,17 @@ void partition( Node * & head , int x ) {
   tail->next = nullptr;
 }
 
-/**
- * [random_range helper routine to generate a random number between min and max (including)]
- * @param  min [min of range]
- * @param  max [max of range]
- * @return     [A random number between min and max]
- */
-static inline int random_range(const int min, const int max) {
-	std::random_device rd;
-	std::mt19937 mt(rd());
-	std::uniform_int_distribution<int> distribution(min, max);
-	return distribution(mt);
-}
+
+
 
 
 int main() {
   Node * head = nullptr;
+  std::random_device rd;
+  std::mt19937 mt(rd());
+  std::uniform_int_distribution<int> distribution(1, 9);
   for ( int i = 0; i < 10; ++i ) {
-		insert(head, random_range(1,9));
+		insert(head, distribution(mt));
 	}
   std::cout << "List before partition around 5:\n";
   printList(head);
