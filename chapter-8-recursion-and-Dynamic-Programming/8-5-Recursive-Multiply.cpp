@@ -34,7 +34,7 @@ int multiply(int a, int b, vector<int>& dp){
 	return side1+side2;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {	
 	int m = 7;
 	int n = 6;
