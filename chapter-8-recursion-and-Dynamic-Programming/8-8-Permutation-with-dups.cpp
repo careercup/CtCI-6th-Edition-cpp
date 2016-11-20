@@ -2,7 +2,6 @@
 #include <vector>
 #include <map>
 #include <string>
-
 using namespace std;
 
 void findPermutations(string curr, map<char,int> m, vector<string>& res, int n){
@@ -13,7 +12,7 @@ void findPermutations(string curr, map<char,int> m, vector<string>& res, int n){
 		return;
 	}
 
-	for (map<char,int>::iterator i = m.begin(); i!=m.end(); ++i){
+	for (map<char,int>::iterator i = m.begin(); i!=m.end(); i++){
 		if (i->second!=0){
 			char c = i->first;
 			string f = curr+c;
@@ -28,21 +27,18 @@ int main()
 {
 	string s = "abbc";
 	string curr ="";
-	map<char, int> m;
+	map <char, int> m;
 	int n = s.length();
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < n; i++)
 	{
 		if (m.find(s[i])!=m.end())
-		{
 			m.find(s[i])->second++;
-		}
-		else{
+		else
 			m.insert(make_pair(s[i],1));
-		}
 	}
 	vector<string> res;
 	findPermutations(curr,m,res,n);
-	for (int i = 0; i < res.size(); ++i)
+	for (int i = 0; i < res.size(); i++)
 	{
 		cout<<res[i]<<endl;
 	}
