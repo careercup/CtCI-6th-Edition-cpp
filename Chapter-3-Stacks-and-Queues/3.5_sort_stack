@@ -1,0 +1,40 @@
+/*
+ * Cracking the coding interview edition 6
+ * Problem 3-5 : Sort one using an additional temporary stack. min element on top of the sorted stack.
+ */
+
+#include<iostream>
+#include<stack>
+using namespace std;
+
+void sortStack(stack<int> *st){
+    stack<int> sorted; //top contains largest element, an additional temporary stack
+    while(!(*st).empty()){
+        int tmp = (*st).top();
+        (*st).pop();
+        while(!sorted.empty() && tmp<sorted.top()){
+            (*st).push(sorted.top());
+            sorted.pop();
+        }
+        sorted.push(tmp);
+    }
+    while(!sorted.empty()){
+        (*st).push(sorted.top()); //this step reverse the sorted order to original stack
+        sorted.pop();
+    }
+}
+
+int main(){
+    stack<int> mystack;
+    int arr[] = {6, 4, 8, 9, 10, 99, 7, 1, 100};
+    for(int i=0; i<sizeof(arr)/sizeof(arr[0]); i++){
+        cout<<"Push in element "<<arr[i]<<endl;
+        mystack.push(arr[i]);
+    }
+    sortStack(&mystack);
+    cout<<"The sorted stack is: "<<endl;
+    while(!mystack.empty()){
+        cout<<mystack.top()<<'\n';
+        mystack.pop();
+    }
+}
