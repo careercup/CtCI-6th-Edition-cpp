@@ -1,14 +1,15 @@
 #include <string>
 #include <vector>
 #include <iostream>
+using namespace std;
 
-bool isUniqueChars(const std::string &str)
+bool isUniqueChars(const string &str)
 	{
 		if (str.length() > 128)
 		{
 			return false;
 		}
-		std::vector<bool> char_set(128);
+		vector<bool> char_set(128);
 		for (int i = 0; i < str.length(); i++)
 		{
 			int val = str[i];
@@ -21,12 +22,13 @@ bool isUniqueChars(const std::string &str)
 		return true;
 	}
 
-void main(std::vector<std::string> &args)
+int main()
 	{
-		std::vector<std::string> words = {"abcde", "hello", "apple", "kite", "padle"};
+		vector<string> words = {"abcde", "hello", "apple", "kite", "padle"};
 		for (auto word : words)
 		{
-			std::cout << word << std::string(": ") << isUniqueChars(word) << std::endl;
+			cout << word << string(": ") << boolalpha << isUniqueChars(word) <<endl;
 		}
+		return 0;
 	}
 
