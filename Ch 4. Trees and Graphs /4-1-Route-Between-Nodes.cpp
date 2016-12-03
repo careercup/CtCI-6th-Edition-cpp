@@ -1,7 +1,6 @@
 #include <vector>
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
 // Graph Class implementing a directed graph in adjacency list representation
@@ -9,7 +8,7 @@ class Graph
 {
 public:
 	int V;	// number of vertices
-	vector<int> *adj;	//adjacency list 
+	vector<int> *adj;  //adjacency list 
 
 	Graph(int V);
 	void addEdge(int x, int y);
@@ -17,7 +16,8 @@ public:
 };
 
 // Constructor
-Graph::Graph(int V){
+Graph::Graph(int V)
+{
 	this->V=V;
 	this->adj = new vector<int>[V];
 }
@@ -57,8 +57,8 @@ bool Graph::isRoute(int x, int y){
 
 int main(){
 	
-	Graph g(6);	
-	g.addEdge(5, 2);
+    Graph g(6);	
+    g.addEdge(5, 2);
     g.addEdge(5, 0);
     g.addEdge(4, 0);
     g.addEdge(4, 1);
