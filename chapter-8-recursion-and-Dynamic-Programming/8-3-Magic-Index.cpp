@@ -1,6 +1,5 @@
 #include <vector>
 #include <iostream>
-
 using namespace std;
 
 int findMagicUtil(vector<int> v, int start, int end){
@@ -20,11 +19,10 @@ int findMagicUtil(vector<int> v, int start, int end){
 	 	return mid;
 	} 
 	else{
-
 		if (findMagicUtil(v,start,min(v[mid],mid))!=-1){
 			return findMagicUtil(v,start,min(v[mid],mid));
 		}
-
+		
 		return (findMagicUtil(v,max(v[mid],mid),end));
 	}
 }
