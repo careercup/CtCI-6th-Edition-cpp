@@ -32,9 +32,9 @@ int multiply(int a, int b, vector<int>& dp)
 int main()
 {	
 	int m = 7, n = 6;
-	int smaller = m > n ? n : m;
-	int bigger = m > n ? m : n;
-	std::vector<int> dp(smaller + 1, -1);
-	cout << multiply(smaller , bigger , dp) << endl;
+	int smaller = m>n?n:m;
+	int bigger = m>n?m:n;
+	std::vector<int> dp(smaller+1,-1);
+	cout<<multiply(smaller,bigger,dp)<<endl;
 	return 0;
 }
