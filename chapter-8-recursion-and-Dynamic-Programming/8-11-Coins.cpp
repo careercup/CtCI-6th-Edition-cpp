@@ -4,7 +4,7 @@ using namespace std;
 
 int ways(int amount, vector<int> denom){
 
-	if (amount==0){
+	if (!amount){
 		return 1;
 	}
 	
@@ -35,5 +35,4 @@ int main()
 	denom.push_back(3);
 
 	cout<<ways(amount,denom)<<endl;
-	return 0;
 }
