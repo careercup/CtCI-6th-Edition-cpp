@@ -62,7 +62,11 @@ public:
 private:
     struct Node
     {
-        Node(T &&v, Node *n): value(std::forward<T>(v)), next(n)
+        Node(T &&v, Node *n): value(std::move(v)), next(n)
+        {
+        }
+
+        Node(const T &v, Node *n): value(v), next(n)
         {
         }
 
