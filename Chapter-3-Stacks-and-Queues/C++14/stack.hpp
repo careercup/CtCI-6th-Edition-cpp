@@ -21,7 +21,7 @@ public:
     template <typename U>
     void push(U &&value)
     {
-        auto n = new Node(std::forward<T>(value), top);
+        auto n = new Node(std::forward<U>(value), top);
         top = n;
         ++stackSize;
     }
