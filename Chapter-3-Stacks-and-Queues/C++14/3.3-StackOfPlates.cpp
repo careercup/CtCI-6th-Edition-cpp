@@ -17,7 +17,7 @@ public:
     {
         if (stacks.isEmpty() || stacks.peek().size() >= Capacity)
             stacks.push(Stack<T>()); // start new stack
-        stacks.peek().push(std::forward<T>(value));
+        stacks.peek().push(std::forward<U>(value));
     }
 
     T &peek()
