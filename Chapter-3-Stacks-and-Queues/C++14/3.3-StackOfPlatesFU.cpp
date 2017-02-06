@@ -13,9 +13,9 @@ public:
     void push(U &&value)
     {
         if (stacks.empty() || stacks.back().size() >= Capacity)
-            stacks.emplace_back(1, std::forward<U>(value));
+            stacks.emplace_back(1, std::forward<T>(value));
         else
-            stacks.back().push_back(std::forward<U>(value));
+            stacks.back().push_back(std::forward<T>(value));
     }
 
     T &peek()
