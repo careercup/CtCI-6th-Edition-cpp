@@ -3,9 +3,8 @@
 // node never differ by more than one.
 
 #include <limits>
-
-#define INCLUDE_HELPER
 #include "tree.hpp"
+#include "treetestutils.hpp"
 
 bool checkHeight(size_t height, size_t &minHeight, size_t &maxHeight)
 {
@@ -45,17 +44,16 @@ bool isTreeBalanced(const Tree<T> &tree)
 
 int main()
 {
-    auto tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}); // balanced tree
+    auto tree = TestUtils::getSampleTree<int>(20); // balanced tree
     std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
 
+    // Disconnect right subtree, the result tree is not balanced
     auto r = tree.getRoot()->getRight();
-    tree.getRoot()->getRight() = std::make_shared<Node<int>>(100); // not balanced
+    tree.getRoot()->getRight() = std::make_shared<Node<int>>(100);
     std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
 
+    // Return right subtree and check if the tree is balanced again
     tree.getRoot()->getRight() = r; // balanced
-    std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
-
-    tree.getRoot()->getRight().reset(); // not balanced
     std::cout << "Tree is " << (isTreeBalanced<int>(tree) ? "" : "NOT ") << "balanced" << std::endl;
     return 0;
 }

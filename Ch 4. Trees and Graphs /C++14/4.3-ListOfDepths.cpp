@@ -4,16 +4,16 @@
 // This task is mostly done in the function printTree :-)
 
 #include <list>
-#define INCLUDE_HELPER
 #include "tree.hpp"
+#include "treetestutils.hpp"
 
 template <typename T>
-using NodeList = std::list<NodePtr<T>>;
+using ListOfDepths = std::list<std::list<NodePtr<T>>>;
 
 template <typename T>
-std::list<NodeList<T>> getNodes(const Tree<T> &tree)
+ListOfDepths<T> getListOfDepths(const Tree<T> &tree)
 {
-    std::list<NodeList<T>> result;
+    ListOfDepths<T> result;
 
     result.emplace_back();
     auto list = &result.back();
@@ -42,10 +42,11 @@ std::list<NodeList<T>> getNodes(const Tree<T> &tree)
 }
 
 template <typename T>
-void printNodes(const std::list<NodeList<T>> &nodes)
+void printDepths(const ListOfDepths<T> &depths)
 {
+    std::cout << "Nodes:\n";
     int depth = 0;
-    for (const auto &line : nodes)
+    for (const auto &line : depths)
     {
         std::cout << depth << ": ";
         auto sep = "";
@@ -62,54 +63,14 @@ void printNodes(const std::list<NodeList<T>> &nodes)
 
 int main()
 {
-    auto tree = treeFromArray({0});
-    auto nodes = getNodes(tree);
-    tree.printTree();
-    printNodes<int>(nodes);
+    auto tree = TestUtils::getSampleTree<int>(15);
+    TestUtils::printTree(tree);
+    auto depths = getListOfDepths(tree);
+    printDepths<int>(depths);
 
-    tree = treeFromArray({0, 1});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3, 4});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3, 4, 5});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
-
-    tree = treeFromArray( {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
-    tree.printTree();
-    nodes = getNodes(tree);
-    printNodes<int>(nodes);
+    tree = TestUtils::getSampleTree<int>(20);
+    TestUtils::printTree(tree);
+    depths = getListOfDepths(tree);
+    printDepths<int>(depths);
     return 0;
 }
