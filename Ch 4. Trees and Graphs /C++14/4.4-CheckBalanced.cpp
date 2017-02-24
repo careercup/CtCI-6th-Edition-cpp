@@ -6,17 +6,6 @@
 #include "tree.hpp"
 #include "treetestutils.hpp"
 
-bool checkHeight(size_t height, size_t &minHeight, size_t &maxHeight)
-{
-    if (height < minHeight)
-        minHeight = height;
-    if (height > maxHeight)
-        maxHeight = height;
-    if (maxHeight - minHeight > 1)
-        return false;
-    return true;
-}
-
 template <typename T>
 int getHeight(const NodePtr<int> &node)
 {
