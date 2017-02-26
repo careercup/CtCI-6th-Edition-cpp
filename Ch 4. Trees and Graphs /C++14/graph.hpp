@@ -1,3 +1,5 @@
+#pragma once
+
 #include <deque>
 #include <memory>
 #include <unordered_set>
@@ -54,7 +56,7 @@ public:
             return name;
         }
 
-        State state;
+        mutable State state;
         std::string name;
 
     private:
@@ -71,19 +73,20 @@ public:
         return s->isAdjacentFor(d);
     }
 
-    void addNode(const std::string &name = std::string())
+    std::shared_ptr<Node> &addNode(const std::string &name = std::string())
     {
         nodes.emplace_back(std::make_shared<Node>(name));
         if (!name.empty())
             namedNodes[name] = nodes.back();
+        return nodes.back();
     }
 
-    std::shared_ptr<Node> &operator[] (size_t i)
+    const std::shared_ptr<Node> &operator[] (size_t i) const
     {
         return nodes[i];
     }
 
-    std::shared_ptr<Node> &operator[] (const std::string &name)
+    const std::shared_ptr<Node> &operator[] (const std::string &name) const
     {
         return namedNodes.at(name);
     }
@@ -100,51 +103,3 @@ private:
 
 template <typename State>
 using Node = std::shared_ptr<typename Graph<State>::Node>;
-
-
-template <typename State>
-Graph<State> getExampleGraph()
-{
-    Graph<State> graph;
-    for (int i = 0; i < 7; ++i)
-        graph.addNode();
-    graph[0]->addChild(graph[1]);
-    graph[1]->addChild(graph[2]);
-    graph[2]->addChild(graph[0]);
-    graph[2]->addChild(graph[3]);
-    graph[3]->addChild(graph[2]);
-    graph[4]->addChild(graph[6]);
-    graph[5]->addChild(graph[4]);
-    graph[6]->addChild(graph[5]);
-    return graph;
-}
-
-template <typename State>
-Graph<State> getExampleGraph2()
-{
-    Graph<State> graph;
-    for (int i = 0; i < 4; ++i)
-        graph.addNode();
-    graph[0]->addChild(graph[1]);
-    graph[1]->addChild(graph[2]);
-    graph[2]->addChild(graph[0]);
-    graph[3]->addChild(graph[2]);
-    return graph;
-}
-
-template <typename State>
-Graph<State> getExampleGraph3()
-{
-    Graph<State> graph;
-    for (int i = 0; i < 6; ++i)
-        graph.addNode();
-    graph[0]->addChild(graph[1]);
-    graph[0]->addChild(graph[4]);
-    graph[0]->addChild(graph[5]);
-    graph[1]->addChild(graph[3]);
-    graph[1]->addChild(graph[4]);
-    graph[2]->addChild(graph[1]);
-    graph[3]->addChild(graph[2]);
-    graph[3]->addChild(graph[4]);
-    return graph;
-}

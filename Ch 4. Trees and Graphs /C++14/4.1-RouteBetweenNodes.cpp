@@ -5,11 +5,12 @@
 #include <iostream>
 #include <cassert>
 #include "graph.hpp"
+#include "graphtestutils.hpp"
 
 enum State {Unvisited, Visiting, Visited};
 
 // Width visiting
-bool routeBetwenNodes(Graph<State> &graph, Node<State> &from, Node<State> &to)
+bool routeBetwenNodes(const Graph<State> &graph, const Node<State> &from, const Node<State> &to)
 {
     if (from == to)
         return true;
@@ -47,7 +48,7 @@ bool routeBetwenNodes(Graph<State> &graph, Node<State> &from, Node<State> &to)
 
 // Recursive visiting
 
-bool routeBetwenNodesWalker(Graph<State> &graph, Node<State> &from, Node<State> &to)
+bool routeBetwenNodesWalker(const Graph<State> &graph, const Node<State> &from, const Node<State> &to)
 {
     if (from == to)
         return true;
@@ -66,7 +67,7 @@ bool routeBetwenNodesWalker(Graph<State> &graph, Node<State> &from, Node<State> 
     return false;
 }
 
-bool routeBetwenNodesR(Graph<State> &graph, Node<State> &from, Node<State> &to)
+bool routeBetwenNodesR(const Graph<State> &graph, const Node<State> &from, const Node<State> &to)
 {
     for (auto &n : graph.getNodes())
         n->state = Unvisited;
@@ -74,18 +75,19 @@ bool routeBetwenNodesR(Graph<State> &graph, Node<State> &from, Node<State> &to)
     return routeBetwenNodesWalker(graph, from, to);
 }
 
-bool test(Graph<State> &graph, size_t from, size_t to)
+bool test(const Graph<State> &graph, size_t from, size_t to)
 {
-    bool result = routeBetwenNodes(graph, graph[from], graph[to]);
-    bool resultR = routeBetwenNodesR(graph, graph[from], graph[to]);
+    auto &fromNode = graph[from], &toNode = graph[to];
+    bool result = routeBetwenNodes(graph, fromNode, toNode);
+    bool resultR = routeBetwenNodesR(graph, fromNode, toNode);
 
     assert(result == resultR);
-    std::cout << to << " is " << (result ? "" : "NOT ") << "reachable from " << from << std::endl;
-    std::cout << to << " is " << (resultR ? "" : "NOT ") << "reachable from " << from << std::endl;
+    std::cout << toNode->Name() << " is " << (result ? "" : "NOT ") << "reachable from " << fromNode->Name() << std::endl;
+    std::cout << toNode->Name() << " is " << (resultR ? "" : "NOT ") << "reachable from " << fromNode->Name() << std::endl;
     return result;
 }
 
-void testGraph(Graph<State> &graph)
+void testGraph(const Graph<State> &graph)
 {
     auto size = graph.getNodes().size();
     for (decltype(size) i = 0; i < size; ++i)
@@ -99,13 +101,8 @@ void testGraph(Graph<State> &graph)
 
 int main()
 {
-    auto graph = getExampleGraph<State>();
-    testGraph(graph);
-
-    graph = getExampleGraph2<State>();
-    testGraph(graph);
-
-    graph = getExampleGraph3<State>();
-    testGraph(graph);
+    testGraph(TestUtils::getExampleGraph<State>());
+    testGraph(TestUtils::getExampleGraph2<State>());
+    testGraph(TestUtils::getExampleGraph3<State>());
     return 0;
 }
