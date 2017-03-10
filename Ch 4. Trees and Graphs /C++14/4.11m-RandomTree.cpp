@@ -42,6 +42,7 @@ public:
         return value;
     }
 
+private:
     void add(const T &v)
     {
         if (!childs[v > value])
@@ -56,7 +57,6 @@ public:
         return get(std::rand() % size + 1);
     }
 
-private:
     const T &get(size_t n) const
     {
         if (n == size)
@@ -70,7 +70,33 @@ private:
     T value;
     size_t size;
     std::array<NodePtr, 2> childs;
+
+    template <typename U>
+    friend class RandomTree;
 };
+
+template <typename T>
+class RandomTree : public Tree<T, false, RandomNode>
+{
+    using Base = Tree<T, false, RandomNode>;
+
+public:
+    const T &getRandom() const
+    {
+        if (!Base::root)
+            throw typename Base::TreeIsEmptyException();
+        return Base::root->getRandom();
+    }
+
+    void add(const T &value)
+    {
+        if (Base::root)
+            Base::root->add(value);
+        else
+            Base::root = std::make_shared<RandomNode<T, false>>(value);
+    }
+};
+
 
 int main()
 {
@@ -79,20 +105,19 @@ int main()
     std::iota(std::begin(v), std::end(v), 0); // Fill with 0, 1, ..., nodeCount - 1.
     std::random_shuffle(std::begin(v), std::end(v), [](int i){return std::rand() % i;});
 
-    auto root = std::make_shared<RandomNode<int>>(v.back());
+    RandomTree<int> tree;
+    tree.add(v.back());
     v.pop_back();
     for (auto i : v)
-        root->add(i);
+        tree.add(i);
 
-    Tree<int, false, RandomNode> tree;
-    tree.setRoot(root);
     TestUtils::printTree(tree);
     std::cout << std::endl;
 
     // Check distribution of rundom tree nodes
     v = std::vector<int>(v.size() + 1, 0);
     for (auto i = 0U; i < v.size() * 1000; ++i)
-        ++v[root->getRandom()];
+        ++v[tree.getRandom()];
 
     size_t cnt = std::accumulate(v.begin(), v.end(), 0);
     std::cout << "Total: " << cnt << " times\n";
