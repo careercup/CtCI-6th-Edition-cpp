@@ -1,16 +1,3 @@
-/*
-Validate BST: Implement a function to check if a binary tree is a binary search tree.
-*/
-
-struct TreeNode {
-	TreeNode* left;
-	TreeNode* right;
-	int data;
-	TreeNode(int a) {
-		data = a;
-	}
-};
-
 bool validateBST(TreeNode* root, int min, int max) {
 	if (root == nullptr) {
 		return true;
