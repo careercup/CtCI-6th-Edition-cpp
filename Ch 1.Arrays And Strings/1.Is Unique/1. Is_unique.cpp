@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <bitset>
+#include <algorithm>
 using namespace std;
 
 bool isUniqueChars(const string &str){
@@ -32,7 +33,8 @@ bool isUniqueChars_bitvector(const string &str) {
 	}
 	return true;
 }
-bool isUniqueChars_noDS(const string &str) {
+
+bool isUniqueChars_noDS_bruteforce(const string &str) {
 	for(int i = 0; i < str.length()-1; i++) {
 		for(int j = i+1; j < str.length(); j++) {
 			if(str[i] == str[j]) {
@@ -43,22 +45,42 @@ bool isUniqueChars_noDS(const string &str) {
 	return true;	
 }
 
+bool isUniqueChars_noDS_sort(string str) {
+	std::make_heap(str.begin(), str.end());
+	std::sort_heap(str.begin(), str.end());
+	
+	for(int i = 0; i < str.length()-1; i++) {
+		if (str[i] == str[i+1]) {
+			return false;
+		}
+	}
+	return true;	
+}
+
 int main(){
 		vector<string> words = {"abcde", "hello", "apple", "kite", "padle"};
+		
 		for (auto word : words)
 		{
 			cout << word << string(": ") << boolalpha << isUniqueChars(word) <<endl;
 		}
+		
 		cout <<endl << "Using bit vector" <<endl;
 		for (auto word : words)
 		{
 			cout << word << string(": ") << boolalpha << isUniqueChars_bitvector(word) <<endl;
 		}
-		cout <<endl << "Using no Data Structures" <<endl;
+		
+		cout <<endl << "Using no Data Structures, brute force method" <<endl;
 		for (auto word : words)
 		{
-			cout << word << string(": ") << boolalpha << isUniqueChars_bitvector(word) <<endl;
+			cout << word << string(": ") << boolalpha << isUniqueChars_noDS_bruteforce(word) <<endl;
 		}
+		
+		cout <<endl << "Using no Data Structures, sorting method" <<endl;
+		for (auto word : words)
+		{
+			cout << word << string(": ") << boolalpha << isUniqueChars_noDS_sort(word) <<endl;
+		}		
 		return 0;
 }
-
