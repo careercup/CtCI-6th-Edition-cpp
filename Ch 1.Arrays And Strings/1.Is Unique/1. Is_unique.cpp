@@ -5,25 +5,28 @@
 #include <algorithm>
 using namespace std;
 
+#define ALPHABET_SIZE 256
+
 bool isUniqueChars(const string &str){
-		if (str.length() > 128){
+	if (str.length() > ALPHABET_SIZE){
+		return false;
+	}
+
+	bool char_set[ALPHABET_SIZE];
+	for (int i = 0; i < str.length(); i++){
+		int val = str[i];
+		if (char_set[val]){
 			return false;
 		}
-		vector<bool> char_set(128);
-		for (int i = 0; i < str.length(); i++){
-			int val = str[i];
-			if (char_set[val]){
-				return false;
-			}
-			char_set[val] = true;
-		}
-		return true;
+		char_set[val] = true;
+	}
+	return true;
 }
 
 bool isUniqueChars_bitvector(const string &str) {
 	//Reduce space usage by a factor of 8 using bitvector. 
 	//Each boolean otherwise occupies a size of 8 bits.
-	bitset<256> bits(0);
+	bitset<ALPHABET_SIZE> bits(0);
 	for(int i = 0; i < str.length(); i++) {
 		int val = str[i];
 		if(bits.test(val) > 0) {
