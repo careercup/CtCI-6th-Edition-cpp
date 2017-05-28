@@ -7,6 +7,10 @@ using namespace std;
 
 #define ALPHABET_SIZE 256
 
+/* Returns whether all the characters in a string are unique using an array of
+booleans to track which characters have been used. The time complexity is O(n),
+as the string only needs to be traversed once. It uses O(k) additional space for
+the array, where k is the alphabet size. */
 bool isUniqueChars(const string &str){
 	if (str.length() > ALPHABET_SIZE){
 		return false;
@@ -23,6 +27,11 @@ bool isUniqueChars(const string &str){
 	return true;
 }
 
+/* Returns whether all the characters in a string are unique using a bitset
+track which characters have been used. Similar to the above function, the time 
+complexity is O(n) and it uses O(k) additional space for the bistet, where k 
+is the alphabet size. However, this version uses 8 times less space (remeber 
+that constant factors are ignored in Big O notation). */
 bool isUniqueChars_bitvector(const string &str) {
 	//Reduce space usage by a factor of 8 using bitvector. 
 	//Each boolean otherwise occupies a size of 8 bits.
@@ -37,6 +46,9 @@ bool isUniqueChars_bitvector(const string &str) {
 	return true;
 }
 
+/* Returns whether all the characters in a string are unique by checking each
+character in the string against every other character. The time complexity is 
+O(n^2), but uses only O(1) additional space. */
 bool isUniqueChars_noDS_bruteforce(const string &str) {
 	for(int i = 0; i < str.length()-1; i++) {
 		for(int j = i+1; j < str.length(); j++) {
@@ -48,7 +60,14 @@ bool isUniqueChars_noDS_bruteforce(const string &str) {
 	return true;	
 }
 
+/* Returns whether all the characters in a string are unique by sorting the 
+charaters in the string and comparing adjacent characters. This still uses O(1) 
+additional space, but the time complexity is reduced to O(n log n). The sorting
+take O(n log n) time, and the comparisongs take O(n). */
 bool isUniqueChars_noDS_sort(string str) {
+	/* Sort the string using heap sort. Unlike other O(n log n) sorting 
+	algorithms, heapsort does not require auxiliary space. */
+	
 	std::make_heap(str.begin(), str.end());
 	std::sort_heap(str.begin(), str.end());
 	
