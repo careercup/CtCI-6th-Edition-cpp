@@ -12,6 +12,10 @@ booleans to track which characters have been used. The time complexity is O(n),
 as the string only needs to be traversed once. It uses O(k) additional space for
 the array, where k is the alphabet size. */
 bool isUniqueChars(const string &str){
+	/* A string with more characters than there are in the alphabet will 
+	necessarily have duplicates. This optimization technically reduces the
+	time complexity to O(min(n, k)). This same optimization can also be applied
+	to any of the other approaches below. */	
 	if (str.length() > ALPHABET_SIZE) {
 		return false;
 	}
