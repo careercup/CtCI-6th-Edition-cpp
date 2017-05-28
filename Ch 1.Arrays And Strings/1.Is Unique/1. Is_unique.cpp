@@ -16,9 +16,9 @@ bool isUniqueChars(const string &str){
 		return false;
 	}
 	
-	bool char_set[ALPHABET_SIZE];
+	bool char_set[ALPHABET_SIZE] = {};
 	for (int i = 0; i < str.length(); i++) {
-		int val = str[i];
+		unsigned char val = str[i];
 
 		if (char_set[val]) {
 			return false;
@@ -38,8 +38,8 @@ bool isUniqueChars_bitvector(const string &str) {
 	//Each boolean otherwise occupies a size of 8 bits.
 	bitset<ALPHABET_SIZE> bits(0);
 	for (int i = 0; i < str.length(); i++) {
-		int val = str[i];
-		if( bits.test(val) > 0) {
+		unsigned char val = str[i];
+		if (bits.test(val)) {
 			return false;
 		}
 		bits.set(val);
@@ -51,8 +51,9 @@ bool isUniqueChars_bitvector(const string &str) {
 character in the string against every other character. The time complexity is 
 O(n^2), but uses only O(1) additional space. */
 bool isUniqueChars_noDS_bruteforce(const string &str) {
-	for (int i = 0; i < str.length()-1; i++) {
-		for (int j = i+1; j < str.length(); j++) {
+	int n = str.length();
+	for (int i = 0; i < n-1; i++) {
+		for (int j = i+1; j < n; j++) {
 			if (str[i] == str[j]) {
 				return false;
 			}
@@ -71,7 +72,8 @@ bool isUniqueChars_noDS_sort(string str) {
 	std::make_heap(str.begin(), str.end());
 	std::sort_heap(str.begin(), str.end());
 	
-	for (int i = 0; i < str.length()-1; i++) {
+	int n = str.length();
+	for (int i = 0; i < n-1; i++) {
 		if (str[i] == str[i+1]) {
 			return false;
 		}
