@@ -1,42 +1,48 @@
 #include <iostream>
-#include <strstream>
-#include <string>
-#include <fstream>
 
+
+#include <string>
 #include <vector>
+#include <fstream>
 using namespace std;
 
-const size_t k = 3;
-const string filename = "k_strings.txt";
-int main()
+void printKlines (const string &fn, int k)
 {
-	vector<string> vec(k);
-	ifstream ifs(filename);
-	string str;
-	size_t idx = 0;
-	size_t lineCnt = 0;
-	while (ifs.good()) {
-		getline(ifs, str);
-		if(str.empty()) {continue;}
-		vec[lineCnt % k]= str;
-		++lineCnt;
+	if (k <= 0){
+		cout << "Error invalid K value " << endl;
+		return;
 	}
-	size_t end;
-	if (lineCnt < k) {
-		end = lineCnt;
-		idx = 0;
-	}
-	else if (lineCnt >= k) {
-		end = k;
-		idx = lineCnt % k;
+	string line;
+	int cnt=0, first=0; ifstream ifs(fn);
+	vector<string> output;
+	while(getline(ifs, line) && !line.empty()) {
+		if(cnt >= k) {
+			output[first] = line;
+			first = (first+1)%k;
+		}
+		else {
+			output.emplace_back(line);
+			++cnt;
+		}
 	}
 
-	cout << "The " << k << " last lines are: " << endl;
-	for (int i = 0 ; i < end; ++i) {
-
-		cout << vec[(i + idx) % k] << " " << endl;
+	int start = first;
+	for (int i=0;  i< (cnt < k ? cnt : k); ++i, start = (start+1)%k) {
+		cout << output[start] << endl;
 	}
-	return 0;
 
 }
 
+int main()
+{
+	string fn;// = "k_strings.txt";
+	cout << "Type in the file name: " << endl;
+	cin >> fn;
+	
+	cout << "Type the number of K last lines to print: " << endl;
+	int k;
+	cin >> k;
+	printKlines(fn, k);
+	
+	return 0;
+}
