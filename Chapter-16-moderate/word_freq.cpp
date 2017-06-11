@@ -44,6 +44,7 @@ int countWordFreq(const string & fileName, const string &word)
 		stringstream ss(line);
 		string w;
 		while(ss >> w) {
+			transform(w.begin(), w.end(), w.begin(), ::tolower);
 			wordFreq[w]++;
 		}
 	}
