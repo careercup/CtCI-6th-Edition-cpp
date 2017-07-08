@@ -8,7 +8,8 @@
 #include <iomanip>
 #include <memory>
 
-template <typename T, bool NodeWithParent>
+template <typename T, bool NodeWithParent,
+          template<typename, bool> class Node>
 class Tree;
 
 template <typename T, bool WithParent>
@@ -16,10 +17,10 @@ class Node;
 
 namespace TestUtils
 {
-    template <typename T, bool NodeWithParent>
-    void printTree(const Tree<T, NodeWithParent> &tree)
+    template <typename T, bool NodeWithParent, template<typename, bool> class Node>
+    void printTree(const Tree<T, NodeWithParent, Node> &tree)
     {
-        using NodePtr = typename Tree<T, NodeWithParent>::NodePtr;
+        using NodePtr = typename Tree<T, NodeWithParent, Node>::NodePtr;
        
         T minValue = std::numeric_limits<T>::max(), maxValue = std::numeric_limits<T>::min();
 
@@ -46,7 +47,7 @@ namespace TestUtils
         if (minValue < 0)
             ++digits;
 
-        const std::string placeholder(digits + 1, ' ');
+        const std::string placeholder(digits, ' ');
         
         std::queue<NodePtr> queue;
         std::queue<NodePtr> childs;
@@ -56,14 +57,18 @@ namespace TestUtils
         do 
         {
             // space between nodes
-            std::string space((size - 1) * placeholder.length() + 1, ' ');
+            std::string space((size - 1) * (placeholder.length() + 1) + 1, ' ');
 
             // margin
             std::cout << std::string(space.length() / 2, ' ');;
             while (!queue.empty())
             {
                 if (!queue.front())
-                    std::cout << placeholder;
+                {
+                    std::cout << placeholder << space;
+                    childs.emplace();
+                    childs.emplace();
+                }
                 else
                 {
                     std::cout << std::setw(digits) << std::right << queue.front()->getValue() << space;
@@ -79,11 +84,11 @@ namespace TestUtils
     }
 
     // The function treeFromArray from the task 4.2 helps us to fill test trees.
-    template <typename T, bool NodeWithParent = false>
+    template <typename T, bool NodeWithParent = false,
+              template<typename, bool> class N = Node>
     auto treeFromArray(const T *array, size_t size)
     {
-        using Node = ::Node<T, NodeWithParent>;
-        using NodePtr = typename Tree<T, NodeWithParent>::NodePtr;
+        using NodePtr = typename Tree<T, NodeWithParent, N>::NodePtr;
 
         std::function<NodePtr (const T *, const NodePtr &, int, int)> subtreeFromArray =
         [&subtreeFromArray](const T *array, const NodePtr &parent, int start, int end) -> NodePtr
@@ -92,28 +97,30 @@ namespace TestUtils
                 return nullptr;
 
             int i = (start + end) / 2;
-            auto node = std::make_shared<Node>(array[i], parent);
+            auto node = std::make_shared<N<T, NodeWithParent>>(array[i], parent);
             node->setLeftChild(subtreeFromArray(array, node, start, i - 1));
             node->setRightChild(subtreeFromArray(array, node, i + 1, end));
             return node;
         };
 
-        Tree<T, NodeWithParent> tree;
+        Tree<T, NodeWithParent, N> tree;
         tree.setRoot(subtreeFromArray(&array[0], nullptr, 0, size - 1));
         return tree;
     }
 
-    template <typename T, bool NodeWithParent = false>
+    template <typename T, bool NodeWithParent = false,
+              template<typename, bool> class N = Node>
     auto treeFromArray(std::initializer_list<T> array)
     {
-        return treeFromArray<T, NodeWithParent>(array.begin(), array.size()); 
+        return treeFromArray<T, NodeWithParent, N>(array.begin(), array.size()); 
     }
 
-    template <typename T, bool NodeWithParent = false>
+    template <typename T, bool NodeWithParent = false,
+              template<typename, bool> class N = Node>
     auto getSampleTree(size_t nodeCount)
     {
         std::vector<T> v(nodeCount) ;
         std::iota(std::begin(v), std::end(v), 0); // Fill with 0, 1, ..., nodeCount - 1.
-        return treeFromArray<T, NodeWithParent>(&v[0], v.size());
+        return treeFromArray<T, NodeWithParent, N>(&v[0], v.size());
     }
 }
