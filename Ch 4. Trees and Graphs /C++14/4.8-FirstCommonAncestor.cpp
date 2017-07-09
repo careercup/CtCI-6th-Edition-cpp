@@ -14,8 +14,8 @@
 enum FindResult
 {
     NotFound,   // node not found in subtree
-    FoundLeft,  // node found in left subtree
-    FoundRight, // node found in right subtree
+    FoundLeft,  // node not found in left subtree
+    FoundRight, // node not found in right subtree
     FoundEqual  // node is subtree root
 };
 

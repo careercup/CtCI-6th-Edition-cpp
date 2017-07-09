@@ -2,12 +2,11 @@
 
 #include "treenode.hpp"
 
-template <typename T, bool WithParent = false,
-          template<typename, bool> class N = Node>
+template <typename T, bool NodeWithParent = false>
 class Tree
 {
 public:
-    using NodePtr = typename N<T, WithParent>::NodePtr;
+    using NodePtr = typename Node<T, NodeWithParent>::NodePtr;
 
     const NodePtr &getRoot() const
     {
