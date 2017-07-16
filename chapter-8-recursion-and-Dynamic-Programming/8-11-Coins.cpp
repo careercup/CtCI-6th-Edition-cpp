@@ -15,7 +15,7 @@ int ways(int amount, vector<int> denom){
 		else
 			return 1;
 	}
-	int curr =denom[n-1]; 
+	int curr = denom[n-1]; 
 	int sum = 0;
 	denom.pop_back();
 	sum += ways(amount,denom);
@@ -26,10 +26,8 @@ int ways(int amount, vector<int> denom){
 	return sum;
 } 
 
-int main()
-{	
+int main(){	
 	int amount = 8;
-	
 	vector<int> denom;
 	denom.push_back(2);
 	denom.push_back(3);
