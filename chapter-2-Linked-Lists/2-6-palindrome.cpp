@@ -207,7 +207,7 @@ int main()
   insert( head1, 'a' );
   std::cout << "List 1: ";
   printList( head1 );
-  if ( isPalindromeRecur( head1 ) ) {
+  if ( isPalindromeIter1( head1 ) ) {
     std::cout << "List 1 is pallindrome list\n";
   } else {
     std::cout << "List 1 is not a pallindrome list\n";
@@ -224,7 +224,7 @@ int main()
   std::cout << "List 2: ";
   printList( head2 );
 
-  if ( isPalindromeRecur( head2 ) ) {
+  if ( isPalindromeIter2( head2 ) ) {
     std::cout << "List 2 is pallindrome list\n";
   } else {
     std::cout << "List 2 is not a pallindrome list\n";
