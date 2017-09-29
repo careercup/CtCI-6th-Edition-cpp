@@ -1,13 +1,10 @@
-//Cracking The Coding Interview 6th Edition by Gayle Laakmann McDowell
 //Question 8.2 C++ contrasting solution
 
 #include <iostream>
 #include <vector>
 #include <unordered_set>
 
-
 using namespace std;
-
 
 struct Point {
     int row;
@@ -49,10 +46,6 @@ bool getPath(int** matrix, int currRow, int currColumn, vector<Point*>& path, un
     duplicateVisits.insert(currPos);
     
     return false;
-    
-    
-    
-    
 }
 
 vector<Point*> getPath(int** matrix, int rows, int columns){
@@ -68,8 +61,6 @@ vector<Point*> getPath(int** matrix, int rows, int columns){
         if (getPath(matrix, rows - 1, columns - 1, path, duplicateVisits)){
             return path;
         }
-        
-        
     }
     //Return an empty vector indicating path does not exist
     return path;
@@ -125,8 +116,6 @@ vector<Point*> getPath(int** matrix, int rows, int columns){
 //}
 
 
-
-
 int** createMatrix(int rows, int columns){
     //initialize number of rows
     int** matrix = new int*[rows];
@@ -155,7 +144,6 @@ int main() {
     matrix[0][1] = -1;
     
     
-    
     vector<Point*> path = getPath(matrix, 5, 7);
     if (path.size() == 0){
         cerr << "Path does not exist!" << endl;
@@ -167,7 +155,5 @@ int main() {
         }
         
     }
-
-    
 
 }
