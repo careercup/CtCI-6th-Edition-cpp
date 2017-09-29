@@ -1,5 +1,4 @@
 /**
- * Cracking the coding interview edition 6
  * Implement a function to check if a list is a palindrome.
  *
  * Approach 1: Reverse the half the list and compare with other half.
@@ -47,6 +46,7 @@ void printList( Node * head ) {
  * @param  head [head of current list]
  * @return      [reversed list's head]
  */
+
 void reverse( Node * & head ) {
   if ( head == nullptr  || (head && (head->next == nullptr))){
     return;
@@ -118,6 +118,7 @@ bool isPalindromeIter1( Node * head ) {
  * @param  head [Head node of the list]
  * @return      [True if list is palindrome, false if not]
  */
+
 bool isPalindromeIter2( Node * head ) {
   // if list is empty or just contains one node.
   if ( head == nullptr || head->next == nullptr ) {
@@ -170,6 +171,7 @@ bool isPalindromeIter2( Node * head ) {
  * @param  right [right pointer of sublist]
  * @return       [true if sublist is palindrome, false if not]
  */
+
 bool isPalindromeRecurHelper( Node * & left, Node * right ) {
   //base case Stop when right becomes nullptr
   if ( right == nullptr ) {
@@ -206,14 +208,14 @@ int main()
   insert( head1, 'b' );
   insert( head1, 'a' );
   std::cout << "List 1: ";
-  printList( head1 );
-  if ( isPalindromeIter1( head1 ) ) {
+  printList(head1);
+  if ( isPalindromeIter1(head1) ) {
     std::cout << "List 1 is pallindrome list\n";
   } else {
     std::cout << "List 1 is not a pallindrome list\n";
   }
   std::cout << "List 1: ";
-  printList( head1 );
+  printList(head1);
 
   Node * head2 = nullptr;
   insert( head2, 'r');
@@ -222,7 +224,7 @@ int main()
   insert( head2, 'a');
   insert( head2, 'r');
   std::cout << "List 2: ";
-  printList( head2 );
+  printList(head2);
 
   if ( isPalindromeIter2( head2 ) ) {
     std::cout << "List 2 is pallindrome list\n";
@@ -231,7 +233,7 @@ int main()
   }
 
   std::cout << "List 2: ";
-  printList( head2 );
+  printList(head2);
 
   Node * head = nullptr;
   insert( head, 'a' );
@@ -240,14 +242,14 @@ int main()
   insert( head, 'b' );
   insert( head, 'd' );
   std::cout << "List 3: ";
-  printList( head );
+  printList(head);
 
-  if ( isPalindromeRecur( head ) ) {
+  if ( isPalindromeRecur(head) ) {
     std::cout << "List 3 is pallindrome list\n";
   } else {
     std::cout << "List 3 is not a pallindrome list\n";
   }
   std::cout << "List 3: ";
-  printList( head );
+  printList(head);
   return 0;
 }
