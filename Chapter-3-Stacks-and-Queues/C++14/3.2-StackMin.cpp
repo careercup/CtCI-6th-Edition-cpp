@@ -13,7 +13,7 @@ public:
     {
         if (minStack.isEmpty() || value <= minStack.peek())
             minStack.push(value);
-        stack.push(std::forward<T>(value));
+        stack.push(std::forward<U>(value));
     }
 
     T &peek()
