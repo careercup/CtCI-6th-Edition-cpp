@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <bitset>
+#include <algorithm> // for sort() 
+
 using namespace std;
 
 bool isUniqueChars(const string &str){
@@ -32,15 +34,19 @@ bool isUniqueChars_bitvector(const string &str) {
 	}
 	return true;
 }
-bool isUniqueChars_noDS(const string &str) {
-	for(int i = 0; i < str.length()-1; i++) {
-		for(int j = i+1; j < str.length(); j++) {
-			if(str[i] == str[j]) {
-				return false;
-			}
+bool isUniqueChars_noDS( string str) {
+	
+	sort(str.begin(), str.end()); // O(nlogn) sort from <algorithm>
+
+	bool noRepeat = true;
+	for ( int i = 0 ; i < str.size() - 1; i++){
+		if ( str[i] == str[i+1] ){
+			noRepeat = false;
+			break;
 		}
 	}
-	return true;	
+
+	return noRepeat;	
 }
 
 int main(){
@@ -57,7 +63,7 @@ int main(){
 		cout <<endl << "Using no Data Structures" <<endl;
 		for (auto word : words)
 		{
-			cout << word << string(": ") << boolalpha << isUniqueChars_bitvector(word) <<endl;
+			cout << word << string(": ") << boolalpha << isUniqueChars_noDS(word) <<endl;
 		}
 		return 0;
 }
