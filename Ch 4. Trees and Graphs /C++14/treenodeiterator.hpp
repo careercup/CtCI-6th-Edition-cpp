@@ -1,10 +1,9 @@
 #pragma once
 
 #include <stack>
-#include <memory>
+#include "treenode.hpp"
 
-template <typename Iterator, typename T, bool NodeWithParent,
-          template <typename, bool> class Node>
+template <typename Iterator, typename T, bool NodeWithParent>
 class IteratorBase
 {
     using NodePtr = typename Node<T, NodeWithParent>::NodePtr;
@@ -38,8 +37,8 @@ protected:
     std::weak_ptr<Node<T, NodeWithParent>> currNode;
 };
 
-template <typename Iterator, typename T, template <typename, bool> class Node>
-class IteratorBase<Iterator, T, false, Node>
+template <typename Iterator, typename T>
+class IteratorBase<Iterator, T, false>
 {
     using NodePtr = std::shared_ptr<Node<T, false>>;
 
@@ -82,10 +81,10 @@ protected:
     std::stack<NodePtr> parents;
 };
 
-template <typename T, bool NodeWithParent, template <typename, bool> class Node>
-class Iterator : public IteratorBase<Iterator<T, NodeWithParent, Node>, T, NodeWithParent, Node>
+template <typename T, bool NodeWithParent>
+class Iterator : public IteratorBase<Iterator<T, NodeWithParent>, T, NodeWithParent>
 {
-    using Super = IteratorBase<Iterator<T, NodeWithParent, Node>, T, NodeWithParent, Node>;
+    using Super = IteratorBase<Iterator<T, NodeWithParent>, T, NodeWithParent>;
     using NodePtr = typename Node<T, NodeWithParent>::NodePtr;
 
 public:
@@ -106,17 +105,17 @@ public:
     }
 };
 
-template <typename T, bool NodeWithParent, template <typename, bool> class Node>
+template <typename T, bool NodeWithParent>
 class Tree;
 
-template <typename T, bool NodeWithParent, template <typename, bool> class Node>
-auto begin(const Tree<T, NodeWithParent, Node> &tree)
+template <typename T, bool NodeWithParent>
+auto begin(const Tree<T, NodeWithParent> &tree)
 {
-    return Iterator<T, NodeWithParent, Node>(tree.getRoot());
+    return Iterator<T, NodeWithParent>(tree.getRoot());
 }
 
-template <typename T, bool NodeWithParent, template <typename, bool> class Node>
-auto end(const Tree<T, NodeWithParent, Node>)
+template <typename T, bool NodeWithParent>
+auto end(const Tree<T, NodeWithParent>)
 {
-    return Iterator<T, NodeWithParent, Node>();
+    return Iterator<T, NodeWithParent>();
 }
