@@ -11,12 +11,11 @@ bool isUniqueChars(const string &str){
 			return false;
 		}
 		vector<bool> char_set(128);
-		for (int i = 0; i < str.length(); i++){
-			int val = str[i];
-			if (char_set[val]){
+		for (auto& ch : str){
+			if (char_set[ch]){
 				return false;
 			}
-			char_set[val] = true;
+			char_set[ch] = true;
 		}
 		return true;
 }
@@ -25,8 +24,7 @@ bool isUniqueChars_bitvector(const string &str) {
 	//Reduce space usage by a factor of 8 using bitvector. 
 	//Each boolean otherwise occupies a size of 8 bits.
 	bitset<256> bits(0);
-	for(int i = 0; i < str.length(); i++) {
-		int val = str[i];
+	for(auto& val : str) {
 		if(bits.test(val) > 0) {
 			return false;
 		}
@@ -67,4 +65,3 @@ int main(){
 		}
 		return 0;
 }
-
