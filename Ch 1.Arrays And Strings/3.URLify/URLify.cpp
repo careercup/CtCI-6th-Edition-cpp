@@ -38,7 +38,7 @@ void urlify(char *str, int len)
     }
 }
 
-std::string urlIfy(std::string& str) {
+std::string urlIfy(const std::string& str) {
     std::string ret; 
     for(char& ch : str) {
         if(ch = ' ') {
