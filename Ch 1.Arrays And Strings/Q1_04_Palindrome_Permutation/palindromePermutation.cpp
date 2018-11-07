@@ -12,7 +12,7 @@
  */
 
 #include <iostream>
-
+#include <vector>
 
 /*
  * Helper routine to return an frequency Table index
@@ -21,35 +21,37 @@
 
 int getCharIndex( char c )
 {
-    int idx = -1;
-    if ( c >= 'a' && c <= 'z' )
+  int idx = -1;
+  if ( c >= 'a' && c <= 'z' )
     {
-        idx = c - 'a';
+      idx = c - 'a';
     }
-    else if ( c >= 'A' && c <= 'Z' )
+  else if ( c >= 'A' && c <= 'Z' )
     {
-        idx = c - 'A';
+      idx = c - 'A';
     }
-    return idx;
+  return idx;
 }
 
 /*
  * Function : countFrequency
  * Args     : input string, an array of int 
- * Return   : Void, array of int will populate each letter's frequency in string.
+ * Return   : vector of int will populate each letter's frequency in string.
  */
 
-void countFrequency( const std::string & str, int *frequency )
+std::vector<int> countFrequency( const std::string & str)
 {
-    int idx;
-    for (const char & c : str)
+  std::vector<int> frequency(26,0);
+  int idx;
+  for (const char & c : str)
     {
-        idx = getCharIndex(c);
-        if ( idx != -1 )
+      idx = getCharIndex(c);
+      if ( idx != -1 )
         {
-            ++frequency[idx];
+	  frequency[idx]++;
         }
     }
+  return frequency;
 }
 
 
@@ -62,22 +64,21 @@ void countFrequency( const std::string & str, int *frequency )
 
 bool isPermutationOfPallindrome1( const std::string & str )
 {
-    int frequency[ 26 ] = { 0 };
-    countFrequency( str, frequency );
+  std::vector<int> frequency = countFrequency(str);
 
     /*
      * We will check here that letter frequencies are all even or all even except one odd.
      */
-    bool oddAppeared = false;
-    std::cout << std::endl;
-    for ( int i = 0 ; i < 26; ++i ) {
-        if ( frequency[i] % 2  && oddAppeared ) {
-            return false;
-        } else if ( frequency[i] % 2 && !oddAppeared ) {
-            oddAppeared = true;
-        }
+  bool oddAppeared = false;
+  std::cout << std::endl;
+  for ( int i = 0 ; i < 26; ++i ) {
+    if ( frequency[i] % 2  && oddAppeared ) {
+      return false;
+    } else if ( frequency[i] % 2 && !oddAppeared ) {
+      oddAppeared = true;
     }
-    return true;
+  }
+  return true;
 }
 
 
@@ -90,24 +91,24 @@ bool isPermutationOfPallindrome1( const std::string & str )
 
 bool isPermutationOfPallindrome2( const std::string & str )
 {
-    int oddCount = 0;
-    int frequency[26] = { 0 };
-    int idx = 0;
-    for ( const char & c : str )
+  int oddCount = 0;
+  int frequency[26] = { 0 };
+  int idx = 0;
+  for ( const char & c : str )
     {
-        idx = getCharIndex(c);
-        if ( idx != -1 )
+      idx = getCharIndex(c);
+      if ( idx != -1 )
         {
-            ++frequency[idx];
-            if ( frequency[idx] % 2 ) 
+	  frequency[idx]++;
+	  if ( frequency[idx] % 2 ) 
             {   
-                ++oddCount;
+	      ++oddCount;
             } else {
-                --oddCount;
-            }
+	    oddCount--;
+	  }
         }
     }
-    return (oddCount <= 1);
+  return (oddCount <= 1);
 }
 
 /*
@@ -126,18 +127,18 @@ bool isPermutationOfPallindrome2( const std::string & str )
 
 int toggle( int bitVector, int index )
 {
-    if ( index < 0 )
-        return bitVector;
-
-    int mask = 1 << index;
-    //if bit is not set
-    if ( (bitVector & mask ) == 0 )
-    {
-        bitVector |= mask;
-    } else {    //if bit is set
-        bitVector &= ~mask;
-    }
+  if ( index < 0 ){
     return bitVector;
+  }
+  int mask = 1 << index;
+  //if bit is not set
+  if ( (bitVector & mask ) == 0 )
+    {
+      bitVector |= mask;
+    } else {    //if bit is set
+    bitVector &= ~mask;
+  }
+  return bitVector;
 }
 
 /*
