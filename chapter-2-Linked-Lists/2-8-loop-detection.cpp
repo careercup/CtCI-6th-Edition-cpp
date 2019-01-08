@@ -18,10 +18,23 @@ void removeLoop( Node * loopNode, Node * head )
 {
   Node * ptr1 = head;
   Node * ptr2 = loopNode;
-  while ( ptr1->next != ptr2->next ) {
-    ptr1 = ptr1->next;
-    ptr2 = ptr2->next;
+  
+  //In case of full cycle, should move to the final node and terminate the loop from there. 
+  //Otherwise, the head node will be seperated from the rest of the list
+  if (loopNode == head)
+  {
+    while (ptr2->next != head) {
+      ptr2 = ptr2->next;
+    }
   }
+  else
+  {
+    while (ptr1->next != ptr2->next) {
+      ptr1 = ptr1->next;
+      ptr2 = ptr2->next;
+    }
+  }
+  
   //ptr2 has reached start of loop, now removing the loop.
   ptr2->next = nullptr;
 }
@@ -83,6 +96,10 @@ int main()
     printList( head );
     std::cout << "Inserting loop, connecting 5 to 2 \n";
     head->next->next->next->next->next = head->next;
+    // to test the special case, replace the loop with 
+    // std::cout << "Inserting loop, connecting 5 to 1 \n";
+    // head->next->next->next->next->next = head;
+
     std::cout << "Detecting and deleting loop\n";
     detectAndRemoveCycle(head);
     std::cout << "Back to the same old list\n";
