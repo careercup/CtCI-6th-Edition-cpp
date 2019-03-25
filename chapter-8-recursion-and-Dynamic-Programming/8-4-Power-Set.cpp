@@ -1,31 +1,25 @@
 #include <iostream>
-#include <vector>
 #include <set>
+#include <iterator>
 
-std::set<std::vector<int>> subsets;
+std::set<std::set<int>> subsets;
 
-void print(const std::vector<int>& vec) {
-	for (const auto& i : vec) {
+void print(const std::set<int>& set) {
+	for (const auto& i : set) {
 		std::cout << i << " ";
 	}
 }
 
-void findSubsets(const std::vector<int>& set) {
+void findSubsets(const std::set<int>& set) {
 
 	subsets.emplace(set);
 
-	if (set.size() == 2) {
-		subsets.emplace(std::vector<int>{set[0]});
-		subsets.emplace(std::vector<int>{set[1]});
-		return;
-	}
-
-	
-	
-	for (int i = 0; i < set.size(); ++i) {
-		std::vector<int> newSubset;
-		for (int j = 0; j < set.size() - 1; ++j) {
-			newSubset.push_back(set[(i + j) % set.size()]);
+	for (unsigned int i = 0; i < set.size(); ++i) {
+		std::set<int> newSubset;
+		for (unsigned int j = 0; j < set.size() - 1; ++j) {
+			std::set<int>::iterator it = set.begin();
+			std::advance(it, (j + i) % set.size());
+			newSubset.emplace(*it);
 		}
 		findSubsets(newSubset);
 	}
@@ -33,8 +27,8 @@ void findSubsets(const std::vector<int>& set) {
 }
 
 int main(int argc, char** argv) {
-	std::vector<int> vec{ 0, 1, 2, 3 };
-	findSubsets(vec);
+	std::set<int> set{ 0, 1, 2, 3 };
+	findSubsets(set);
 
 	for (const auto& set : subsets) {
 		print(set);
