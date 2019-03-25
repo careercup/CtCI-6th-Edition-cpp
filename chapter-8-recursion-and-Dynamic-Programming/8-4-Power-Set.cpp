@@ -21,7 +21,9 @@ void findSubsets(const std::set<int>& set) {
 			std::advance(it, (j + i) % set.size());
 			newSubset.emplace(*it);
 		}
-		findSubsets(newSubset);
+
+		if ( newSubset.size() > 0 )
+			findSubsets(newSubset);
 	}
 	
 }
