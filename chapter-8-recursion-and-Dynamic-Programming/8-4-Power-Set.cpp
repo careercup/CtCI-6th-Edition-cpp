@@ -11,13 +11,10 @@ void print(const std::set<int>& set) {
 }
 
 void findSubsets(const std::set<int>& set) {
-
-	if (set.size() == 1) {
-		subsets.emplace(set);
-		return;
-	}
-
 	subsets.emplace(set);
+
+	if (set.size() <= 1)
+		return;
 
 	for (unsigned int i = 0; i < set.size(); ++i) {
 		std::set<int> newSubset;
@@ -34,7 +31,7 @@ void findSubsets(const std::set<int>& set) {
 }
 
 int main(int argc, char** argv) {
-	std::set<int> set{ 0, 1, 2, 3 };
+	std::set<int> set{ 0, 1, 2 };
 	findSubsets(set);
 
 	for (const auto& set : subsets) {
