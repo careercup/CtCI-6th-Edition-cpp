@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <string>
 
 /*
  * Function : urlify
@@ -35,6 +36,17 @@ void urlify(char *str, int len)
             str[i--] = '%';
         }
     }
+}
+
+std::string urlIfy(const std::string& str) {
+    std::string ret; 
+    for(char& ch : str) {
+        if(ch = ' ') {
+            ret.append("%20");
+        }
+        ret += ch; 
+    } 
+    return ret; 
 }
 
 int main()
