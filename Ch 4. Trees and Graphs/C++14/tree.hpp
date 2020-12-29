@@ -3,11 +3,11 @@
 #include "treenode.hpp"
 
 template <typename T, bool WithParent = false,
-          template<typename, bool> class N = Node>
+          typename Node = Node<T, WithParent>>
 class Tree
 {
-public:
-    using NodePtr = typename N<T, WithParent>::NodePtr;
+  public:
+    using NodePtr = typename Node::NodePtr;
 
     const NodePtr &getRoot() const
     {
@@ -28,8 +28,8 @@ public:
     }
 
     class TreeIsEmptyException {};
-    
-protected:
+
+  protected:
     NodePtr root;
 };
 

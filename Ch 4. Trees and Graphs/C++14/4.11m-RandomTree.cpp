@@ -13,10 +13,7 @@
 #include "tree.hpp"
 #include "treetestutils.hpp"
 
-template <typename T, bool>
-class RandomNode;
-
-template <typename T, bool NotUsed = false>
+template <typename T>
 class RandomNode
 {
 public:
@@ -76,24 +73,24 @@ private:
 };
 
 template <typename T>
-class RandomTree : public Tree<T, false, RandomNode>
+class RandomTree : public Tree<T, false, RandomNode<T>>
 {
-    using Base = Tree<T, false, RandomNode>;
+    using Super = Tree<T, false, RandomNode<T>>;
 
-public:
+  public:
     const T &getRandom() const
     {
-        if (!Base::root)
-            throw typename Base::TreeIsEmptyException();
-        return Base::root->getRandom();
+        if (!Super::root)
+            throw typename Super::TreeIsEmptyException();
+        return Super::root->getRandom();
     }
 
     void add(const T &value)
     {
-        if (Base::root)
-            Base::root->add(value);
+        if (Super::root)
+            Super::root->add(value);
         else
-            Base::root = std::make_shared<RandomNode<T, false>>(value);
+            Super::root = std::make_shared<RandomNode<T>>(value);
     }
 };
 

@@ -14,8 +14,8 @@ NodePtr<T> subtreeFromArray(const T *array, int start, int end)
 
     int i = (start + end) / 2;
     auto node = std::make_shared<Node<T>>(array[i]);
-    node->setLeftChild(subtreeFromArray(array, start, i - 1));
-    node->setRightChild(subtreeFromArray(array, i + 1, end));
+    node->setLeft(subtreeFromArray(array, start, i - 1));
+    node->setRight(subtreeFromArray(array, i + 1, end));
     return node;
 }
 
@@ -33,8 +33,9 @@ int main()
     std::array<int, 63> array;
     std::iota(array.begin(), array.end(), 0); // Fill with 0 .. 62
 
-    for (auto &i : {1, 2, 3, 6, 7, 8, 14, 15, 16, 29, 30, 31})
+    for (auto i : {1, 2, 3, 6, 7, 8, 14, 15, 16, 29, 30, 31})
     {
+        std::cout << '\n';
         auto tree = treeFromArray(&array[0], i);
         TestUtils::printTree(tree);
     }

@@ -31,12 +31,12 @@ int main()
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
 
     // invalid BST
-    tree.getRoot()->getRight()->getRight()->getRight()->setLeftChild(std::make_shared<Node<int>>(19));
+    tree.getRoot()->getRight()->getRight()->getRight()->setLeft(std::make_shared<Node<int>>(19));
     TestUtils::printTree(tree);
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
 
     // invalid BST
-    tree.getRoot()->getRight()->getRight()->getRight()->setLeftChild(std::make_shared<Node<int>>(15));
+    tree.getRoot()->getRight()->getRight()->getRight()->setLeft(std::make_shared<Node<int>>(15));
     TestUtils::printTree(tree);
     std::cout << "The tree is " << (isValidBST<int>(tree) ? "" : "NOT ") << "binary search tree" << std::endl;
 }

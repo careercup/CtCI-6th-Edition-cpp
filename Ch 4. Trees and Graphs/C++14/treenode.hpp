@@ -2,45 +2,14 @@
 
 #include <memory>
 
-template <typename Node, bool WithParent>
-class NodeBase
+template <typename T, bool WithParent = false, bool R = WithParent>
+class Node;
+
+template <typename T, bool R>
+class Node<T, false, R>
 {
-public:
-    NodeBase() = default;
-
-    NodeBase(const std::shared_ptr<Node> &p) : parent(p)
-    {
-    }
-
-    std::shared_ptr<Node> getParent()
-    {
-        return parent.lock();
-    }
-private:
-    std::weak_ptr<Node> parent;
-};
-
-// Specialization for tree node containing no reference to parent 
-template <typename Node>
-class NodeBase<Node, false>
-{
-public:
-    NodeBase() = default;
-
-    NodeBase(const std::shared_ptr<Node> &)
-    {
-    }
-
-private:
-};
-
-template <typename T, bool WithParent = false>
-class Node : public NodeBase<Node<T, WithParent>, WithParent>
-{
-    using Super = NodeBase<Node, WithParent>;
-
-public:
-    using NodePtr = std::shared_ptr<Node>;
+  public:
+    using NodePtr = std::shared_ptr<Node<T, R, R>>;
 
     Node(T &&v) : value(std::move(v))
     {
@@ -50,11 +19,11 @@ public:
     {
     }
 
-    Node(T &&v, const NodePtr &parent) : Super(parent), value(std::move(v))
+    Node(T &&v, NodePtr) : value(std::move(v))
     {
     }
 
-    Node(const T &v, const NodePtr &parent) : Super(parent), value(v)
+    Node(const T &v, NodePtr) : value(v)
     {
     }
 
@@ -82,20 +51,43 @@ public:
     {
         return childs.second;
     }
-    
+
     template <typename U>
-    void setLeftChild(U &&node)
+    void setLeft(U &&node)
     {
         childs.first = std::forward<U>(node);
     }
 
     template <typename U>
-    void setRightChild(U &&node)
+    void setRight(U &&node)
     {
         childs.second = std::forward<U>(node);
     }
 
-protected:
+  protected:
     T value;
     std::pair<NodePtr, NodePtr> childs;
+};
+
+template <typename T>
+class Node<T, true, true> : public Node<T, false, true>
+{
+  public:
+    using NodePtr = std::shared_ptr<Node<T, true, true>>;
+
+    Node(T &&v, NodePtr p) : Node<T, false, true>(std::move(v)), parent(p)
+    {
+    }
+
+    Node(const T &v, NodePtr p) : Node<T, false, true>(v), parent(p)
+    {
+    }
+
+    NodePtr getParent() const
+    {
+        return parent.lock();
+    }
+
+  protected:
+    std::weak_ptr<Node<T, true, true>> parent;
 };
