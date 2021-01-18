@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <memory>
+#include <cmath>
 
 template <typename T, bool NodeWithParent,
           template<typename, bool> class Node>
