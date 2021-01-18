@@ -75,9 +75,9 @@ Node * kthToLastHelper( Node * head, int k , int & i) {
   if ( head == nullptr ) {
     return nullptr;
   }
-
-  Node * node = kthToLastHelper(head->next, k, i);
   i = i + 1;
+  Node * node = kthToLastHelper(head->next, k, i);
+  
   //if we have solved problem k times from last.
   if ( i == k ) {
     return head;
