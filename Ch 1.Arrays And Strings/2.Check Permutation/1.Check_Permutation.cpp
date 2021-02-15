@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
+#include <unordered_map>
 #include <iostream>
 using namespace std;
 bool arePermutation(string str1,string str2)
@@ -41,6 +42,34 @@ bool arePermutation_2(const string &str1, const string &str2) {
   }
   return true;
 }
+
+bool arePermutation_3(string str1, string str2)
+{
+	if (str1.length() != str2.length())
+		return false;
+	
+	// Store characters of the first string and their counts in a hash map
+	unordered_map<char, int> my_map;
+	for (char c : str1)
+	{
+		if (!my_map.count(c))
+			my_map[c] = 1;
+		else
+			++my_map[c];
+	}
+	
+	// Check whether the characters in the second string are present in the hash map
+	for (char c : str2)
+	{
+		if (!my_map.count(c) || !my_map[c])
+			return false;
+		else
+			--my_map[c];
+	}
+
+	return true;
+}
+
 int main() {
 // Test Method 1 - Using sort
     cout << "Method 1 - Using sort" << endl;
@@ -71,5 +100,21 @@ int main() {
       cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
     else
       cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+  
+  //Test Method 3 - Using hash map
+    cout << "Method 3 - Using hash map" << endl;
+    str1 = "testest";
+    str2 = "estxest";
+    if(arePermutation_3(str1, str2))
+      cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
+    else
+      cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+    str1 = "hello";
+    str2 = "oellh";
+     if(arePermutation_3(str1, str2))
+      cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
+    else
+      cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+  
     return 0;
 }
