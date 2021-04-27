@@ -44,7 +44,7 @@ void merge(int A[], int N, int B[], int M)
 int main()
 {
     // As an example, we can use:
-    int A[5] = {1, 3, 5, 7, 9};
+    int A[9] = {1, 3, 5, 7, 9};
     int B[4] = {2, 4, 6, 8};
     
     // print arrays before
