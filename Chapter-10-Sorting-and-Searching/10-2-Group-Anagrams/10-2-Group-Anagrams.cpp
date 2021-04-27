@@ -28,9 +28,7 @@ void group_anagrams(std::string arr[], int size)
         for (int i = cur_index + 1; i < size; i++) {
             if (anagram_check(arr[cur_index], arr[i])) {
                 cur_index++;
-                std::string temp = arr[i];
-                arr[i] = arr[cur_index];
-                arr[cur_index] = temp;
+                std::swap(arr[i], arr[cur_index]);
             }
         }
         cur_index++;
