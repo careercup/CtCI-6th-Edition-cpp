@@ -6,6 +6,24 @@
 
 using namespace std;
 
+bool solve()
+{
+	string str;
+	getline(cin,str);
+	int n=str.size();
+	sort(str.begin(), str.end());
+	
+	for(int i=0;i<n-1;i++)
+	{
+		if(str[i]==str[i+1])
+		{
+			return false;
+		}
+		
+	}
+	return true;
+}
+
 bool isUniqueChars(const string &str){
 		if (str.length() > 128){
 			return false;
