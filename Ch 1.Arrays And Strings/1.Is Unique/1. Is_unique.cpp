@@ -53,12 +53,14 @@ bool isUniqueChars_noDS( string str) {
 bool is_unique(string str){
     map<char, int> character_counts;
 
+    int ctr = 0;
     for (char c: str){
         if (character_counts[c]==1){
             return false;
         } 
-   	character_counts[c]=1;
+        character_counts[c]=1;
     }
+
     return true;
 }
 
