@@ -54,12 +54,10 @@ bool is_unique(string str){
     map<char, int> character_counts;
 
     for (char c: str){
-        for (auto it=character_counts.begin(); it!=character_counts.end(); it++){
-            if (c==it->first){
-                return false;
-            }
+        if (character_counts[c]==1){
+            return false;
         } 
-        character_counts[c]=1;
+   	character_counts[c]=1;
     }
     return true;
 }
