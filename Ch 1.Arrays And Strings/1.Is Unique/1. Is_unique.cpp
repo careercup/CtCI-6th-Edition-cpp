@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <bitset>
+#include <map>
 #include <algorithm> // for sort() 
 
 using namespace std;
@@ -47,6 +48,20 @@ bool isUniqueChars_noDS( string str) {
 	}
 
 	return noRepeat;	
+}
+
+bool is_unique(string str){
+    map<char, int> character_counts;
+
+    for (char c: str){
+        for (auto it=character_counts.begin(); it!=character_counts.end(); it++){
+            if (c==it->first){
+                return false;
+            }
+        } 
+        character_counts[c]=1;
+    }
+    return true;
 }
 
 int main(){
