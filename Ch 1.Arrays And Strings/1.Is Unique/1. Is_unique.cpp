@@ -60,7 +60,7 @@ int main(){
 		{
 			cout << word << string(": ") << boolalpha << isUniqueChars_bitvector(word) <<endl;
 		}
-		cout <<endl << "Using no Data Structures" <<endl;
+		cout << endl << "Using no Data Structures" <<endl;
 		for (auto word : words)
 		{
 			cout << word << string(": ") << boolalpha << isUniqueChars_noDS(word) <<endl;
