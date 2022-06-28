@@ -33,6 +33,7 @@ void urlify(char *str, int len)
             str[i--] = '0';
             str[i--] = '2';
             str[i--] = '%';
+            i=i-3;
         }
     }
 }
