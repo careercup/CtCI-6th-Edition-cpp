@@ -12,6 +12,7 @@
  */
 
 #include <iostream>
+#include <vector>
 
 
 /*
@@ -69,7 +70,6 @@ bool isPermutationOfPallindrome1( const std::string & str )
      * We will check here that letter frequencies are all even or all even except one odd.
      */
     bool oddAppeared = false;
-    std::cout << std::endl;
     for ( int i = 0 ; i < 26; ++i ) {
         if ( frequency[i] % 2  && oddAppeared ) {
             return false;
@@ -130,14 +130,7 @@ int toggle( int bitVector, int index )
         return bitVector;
 
     int mask = 1 << index;
-    //if bit is not set
-    if ( (bitVector & mask ) == 0 )
-    {
-        bitVector |= mask;
-    } else {    //if bit is set
-        bitVector &= ~mask;
-    }
-    return bitVector;
+    return bitVector ^ mask;
 }
 
 /*
@@ -168,29 +161,31 @@ bool isPermutationOfPallindrome3( const std::string & str )
     return ( bitVector == 0 || isExactlyOneBitSet(bitVector) );
 }
 
+
+#define TEST(pFunc, pattern)                                          \
+    do {                                                              \
+        std::cout << "[" #pFunc "]" << std::endl;                     \
+        std::cout << "- Pattern: " << pattern << std::endl;           \
+        std::cout << "- Result : " << pFunc(pattern) << std::endl;    \
+    } while (0)
+
 int main()
 {
-    std::string str("Tact Coa");
-    std::cout << "Does \"" << str << "\"  has a string whose permutation is a pallindrome? "
-              << "( 1 for true, 0 for false ) : ";
-    std::cout << "Approach 1:" << isPermutationOfPallindrome1( str ) << std::endl;
-    std::cout << "Approach 2:" << isPermutationOfPallindrome2( str ) << std::endl;
-    std::cout << "Approach 3:" << isPermutationOfPallindrome3( str ) << std::endl;
-
-
-    std::string str1("A big Cat");
-    std::cout << "Does \"" << str1 << "\" has a string whose permutation is a pallindrome? "
-              << "( 1 for true, 0 for false ) : ";
-    std::cout << "Approach 1:" << isPermutationOfPallindrome1( str1 ) << std::endl;
-    std::cout << "Approach 2:" << isPermutationOfPallindrome2( str1 ) << std::endl;
-    std::cout << "Approach 3:" << isPermutationOfPallindrome3( str1 ) << std::endl;
-
-
-    std::string str2("Aba cbc");
-    std::cout << "Does \"" << str2 << "\" has a string whose permutation is a pallindrome? "
-              << "( 1 for true, 0 for false ) : ";
-    std::cout << "Approach 1:" << isPermutationOfPallindrome1( str2 ) << std::endl;
-    std::cout << "Approach 2:" << isPermutationOfPallindrome2( str2 ) << std::endl;
-    std::cout << "Approach 3:" << isPermutationOfPallindrome3( str2 ) << std::endl;
+    std::vector<std::string> patterns{
+        "",
+        "a",
+        "ab",
+        "Tact Coa",
+        "A big Cat",
+        "Aba cbc",
+        "Rats live on no evil st",
+        "Rats live on no evil star"
+        };
+    for (auto& pattern : patterns)
+    {
+        TEST(isPermutationOfPallindrome1, pattern);
+        TEST(isPermutationOfPallindrome2, pattern);
+        TEST(isPermutationOfPallindrome3, pattern);
+    }
     return 0;
 }
