@@ -1,66 +1,58 @@
 #include <iostream>
-using namespace std;
 
-int partition(int *arr,int low,int high);
+int partition(int *arr, int low, int high) {
+    int pivot = arr[low];
+    int i = low, j = high + 1;
 
-void quick(int *arr,int low,int high){
-if(high>low){
-int cnst=partition(arr,low,high);
-quick(arr,low,cnst-1);
-quick(arr,cnst+1,high);
-}
-}
+    while (i < j) {
+        do {
+            ++i;
+        }
+        while (arr[i] <= pivot);
 
-int partition(int *arr,int low,int high){
-int pivot=arr[low];
-int i=low,j=high+1;
+        do {
+            --j;
+        }
+        while(arr[j] > pivot);
 
-while(i<j){
+        if (i < j) {
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+    }
 
-do{
-i++;
-}
-while(arr[i]<=pivot);
+    int tmp = arr[low];
+    arr[low] = arr[j];
+    arr[j] = tmp;
 
-do{
-j--;
-}
-while(arr[j]>pivot);
-
-if(i<j){
-int tmp=arr[i];
-arr[i]=arr[j];
-arr[j]=tmp;
+    return j;
 }
 
+void quicksort(int *arr, int low, int high) {
+    if (high > low) {
+        int cnst = partition(arr, low, high);
+        quicksort(arr, low, cnst - 1);
+        quicksort(arr, cnst + 1, high);
+    }
 }
 
-int tmp=arr[low];
-arr[low]=arr[j];
-arr[j]=tmp;
+int main() {
+    int n;
+    std::cout << "enter array size : ";
+    std::cin >> n;
 
-/*for(int i=low;i<=high;i++)
-cout<<arr[i]<<" ";
-cout<<endl;*/
+    int arr[n];
+    std::cout << "enter array elements : ";
 
-return j;
-}
+    for(int i = 0; i < n; ++i) {
+        std::cin >> arr[i];
+    }
 
-int main(){
+    quicksort(arr, 0, n - 1);
 
-int n;
-cout<<"Enter array size "<<endl;
-cin>>n;
-
-int arr[n];
-cout<<"Enter array elements "<<endl;
-
-for(int i=0;i<n;i++)
-cin>>arr[i];
-
-quick(arr,0,n-1);
-for(int i=0;i<n;i++)
-cout<<arr[i]<<" ";
-cout<<endl;
-
+    for(int i = 0; i < n; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << "\n";
 }
