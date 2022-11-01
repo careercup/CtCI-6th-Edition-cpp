@@ -34,7 +34,7 @@ bool Graph::isRoute(int x, int y){
 	queue<int> q;
 
 	q.push(x);
-
+	visited[x]= true;
 	while(!q.empty()){
 		int curr = q.front();
 		if (curr == y)
@@ -42,13 +42,13 @@ bool Graph::isRoute(int x, int y){
 			return true;
 		}
 		q.pop();
-		visited[curr]= true;
 		int n_size =adj[curr].size();
 		for (int i = 0; i < n_size; ++i)
 		{	
 			if (!visited[adj[curr][i]])
 			{
 				q.push(adj[curr][i]);
+				visited[adj[curr][i]] = true; // we don't want to re-add the elemenets in case of a cycle
 			}
 		}
 	}
