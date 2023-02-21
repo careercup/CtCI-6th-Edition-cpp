@@ -22,8 +22,8 @@ bool isUniqueChars(const string &str){
 }
 
 bool isUniqueChars_bitvector(const string &str) {
-	//Reduce space usage by a factor of 8 using bitvector. 
-	//Each boolean otherwise occupies a size of 8 bits.
+	// This is just something else you can use. 
+	// It used to be not the case but vector<bool> is space-optimized now.
 	bitset<256> bits(0);
 	for(int i = 0; i < str.length(); i++) {
 		int val = str[i];
