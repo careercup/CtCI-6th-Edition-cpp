@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <bitset>
+#include <unordered_set>
 #include <algorithm> // for sort() 
 
 using namespace std;
@@ -34,6 +35,21 @@ bool isUniqueChars_bitvector(const string &str) {
 	}
 	return true;
 }
+
+bool isUniqueChars_unorderedset(const string &str) {
+	if (str.length() > 128){
+		return false;
+	}
+	unordered_set<char> set;
+    	for(int i = 0; i < str.length(); i++) {
+        	if(set.find(str[i]) != set.end()) {
+            		return false;
+        	}
+        	set.insert(str[i]);
+    	}
+    	return true;
+}
+
 bool isUniqueChars_noDS( string str) {
 	
 	sort(str.begin(), str.end()); // O(nlogn) sort from <algorithm>
@@ -59,6 +75,11 @@ int main(){
 		for (auto word : words)
 		{
 			cout << word << string(": ") << boolalpha << isUniqueChars_bitvector(word) <<endl;
+		}
+		cout <<endl << "Using unordered set" <<endl;
+		for (auto word : words)
+		{
+			cout << word << string(": ") << boolalpha << isUniqueChars_unorderedset(word) <<endl;
 		}
 		cout <<endl << "Using no Data Structures" <<endl;
 		for (auto word : words)
