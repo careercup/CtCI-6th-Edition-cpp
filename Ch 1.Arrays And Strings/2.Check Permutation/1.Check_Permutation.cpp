@@ -41,6 +41,20 @@ bool arePermutation_2(const string &str1, const string &str2) {
   }
   return true;
 }
+
+bool arePermutation_3(const string &str1, const string &str2) {
+  if(str1.length() != str2.length()) 
+    return false;
+    char check = 0;
+    for (int i = 0; i < s1.length(); i++) {
+      check ^= s1[i];
+      check ^= s2[i];
+    }
+    return check == 0;
+}
+
+
+
 int main() {
 // Test Method 1 - Using sort
     cout << "Method 1 - Using sort" << endl;
@@ -71,5 +85,26 @@ int main() {
       cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
     else
       cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+
+
+//Test Method 2 - Using character count
+    cout << "Method 3 - Using character XOR" << endl;
+    str1 = "testest";
+    str2 = "estxest";
+    if(arePermutation_3(str1, str2))
+      cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
+    else
+      cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+    str1 = "hello";
+    str2 = "oellh";
+     if(arePermutation_3(str1, str2))
+      cout << str1 <<" and " << str2 << " are permutation of each other" << endl;
+    else
+      cout << str1 <<" and " << str2 << " are not permutation of each other" << endl;
+    return 0;
+
+
+
+
     return 0;
 }
